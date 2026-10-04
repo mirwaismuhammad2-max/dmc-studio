@@ -12,8 +12,8 @@ jobs:
       - name: Unpack project
         id: unpack
         run: |
-          if [ -f dmc-studio-android.zip ]; then unzip -o -q dmc-studio-android.zip -d . ; fi
-          if [ -f settings.gradle ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else echo "Upload dmc-studio-android.zip to build the app."; fi
+          for z in *.zip; do [ -f "$z" ] && unzip -o -q "$z" -d . ; done
+          if [ -f settings.gradle ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else echo "No zip found. Upload dmc-studio-android.zip"; fi
       - uses: actions/setup-java@v4
         if: steps.unpack.outputs.ready == 'true'
         with:
